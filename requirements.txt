@@ -7,3 +7,6 @@ pillow
 opencv-python-headless
 torch
 torchvision
+sqlalchemy
+
+
