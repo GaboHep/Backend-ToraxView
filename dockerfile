@@ -15,7 +15,10 @@ WORKDIR /app
 
 # Instala deps primero (mejor cache)
 COPY requirements.txt .
-RUN python -m pip install --upgrade pip && pip install -r requirements.txt
+# después de COPY requirements.txt .
+RUN python -m pip install --upgrade pip && \
+    pip install --no-cache-dir --default-timeout=120 --retries=5 -r requirements.txt
+
 
 # Copia código y pesos
 COPY . .
