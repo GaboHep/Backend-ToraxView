@@ -8,5 +8,7 @@ opencv-python-headless
 torch
 torchvision
 sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]   # si usas JWT en create_access_token (muy probable)
 
 
