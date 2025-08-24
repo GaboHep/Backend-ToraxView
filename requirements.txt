@@ -10,5 +10,5 @@ torchvision
 sqlalchemy
 passlib[bcrypt]
 python-jose[cryptography]   # si usas JWT en create_access_token (muy probable)
-psycopg2-binary==2.9.9
+psycopg[binary]==3.2.1
 
