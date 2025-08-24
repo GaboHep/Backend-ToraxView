@@ -1,24 +1,26 @@
+# auth/routes.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal
+
+# Quita esta línea (ya no se usa):
+# from database import SessionLocal
+
 from .models import User, Registro
 from .schemas import UserLogin, RegistroCreate
-from .auth_utils import verify_password, create_access_token
+
+# Trae get_db y utilidades SOLO desde auth_utils (fuente única)
+from auth.auth_utils import (
+    get_db,
+    get_current_admin_user,
+    get_current_user,
+    hash_password,
+    verify_password,
+    create_access_token,
+)
+
 from auth.schemas import RadiologoCreate, RadiologoOut, RadiologoUpdate
-from auth.auth_utils import get_db, get_current_admin_user, hash_password
-from datetime import datetime
-from auth.auth_utils import get_current_user
-
-
 
 router = APIRouter()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):

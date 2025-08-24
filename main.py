@@ -5,6 +5,7 @@ from functools import lru_cache
 
 from model.utils import load_model_and_transform, predict, DEVICE
 from auth.routes import router as auth_router
+from auth import routes as auth_routes  # el mismo router
 from database import Base, engine
 
 # Crea tablas al arrancar (Postgres)
@@ -28,6 +29,8 @@ app.add_middleware(
 
 # Routers
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
+
+app.include_router(auth_routes.router, tags=["auth-compat"])
 
 # --- Root & Health: aceptar GET y HEAD para el health-check de Render ---
 @app.api_route("/", methods=["GET", "HEAD"], tags=["root"])
