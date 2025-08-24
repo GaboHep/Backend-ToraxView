@@ -7,12 +7,11 @@ from sqlalchemy.orm import Session
 from auth.models import User
 from database import SessionLocal
 
-SECRET_KEY = "supersecret"  # cambia esto
+SECRET_KEY = os.getenv("SECRET_KEY", "change-me-in-prod")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def verify_password(plain, hashed):
