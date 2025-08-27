@@ -9,13 +9,23 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     role = Column(String)  # "radiologo" o "administrador"
+    registros = relationship(
+        "Registro",
+        back_populates="user",
+        # si vas a depender del CASCADE del DB, usa passive_deletes=True
+        passive_deletes=True
+    )
 
 
 class Registro(Base):
     __tablename__ = "registros"
 
     key = Column(String, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE"),  # <— clave
+        nullable=False
+    )
     inference_date = Column(Date)
     birth_date = Column(Date)
     gender = Column(String)
@@ -27,4 +37,4 @@ class Registro(Base):
     feedback = Column(Text)
     image = Column(Text)        # base64 de la imagen
 
-    user = relationship("User")
+    user = relationship("User", back_populates="registros", passive_deletes=True)

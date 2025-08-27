@@ -110,8 +110,8 @@ def export_registros(
         # CSV dentro del ZIP
         csv_buf = io.StringIO()
         fieldnames = [
-            "key","inference_date","birth_date","gender","city","parish","canton",
-            "precision","feedback","resultados","user_id","username","image_path","image"
+            "key","inference_date","birth_date","gender","city","parish","province",
+            "feedback","resultados","image_path","image"
         ]
         writer = csv.DictWriter(csv_buf, fieldnames=fieldnames)
         writer.writeheader()
