@@ -7,6 +7,7 @@ from model.utils import load_model_and_transform, predict, DEVICE
 from auth.routes import router as auth_router
 from auth import routes as auth_routes  # el mismo router
 from database import Base, engine
+from auth.routes_export import router as export_router
 
 # Crea tablas al arrancar (Postgres)
 Base.metadata.create_all(bind=engine)
@@ -31,6 +32,8 @@ app.add_middleware(
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 
 app.include_router(auth_routes.router, tags=["auth-compat"])
+
+app.include_router(export_router)
 
 # --- Root & Health: aceptar GET y HEAD para el health-check de Render ---
 @app.api_route("/", methods=["GET", "HEAD"], tags=["root"])
