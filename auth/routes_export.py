@@ -49,12 +49,9 @@ def _registro_to_row(r: Registro):
         "gender": r.gender,
         "city": r.city,
         "parish": r.parish,
-        "canton": getattr(r, "canton", None),
-        "precision": float(r.precision or 0.0),
+        "province": getattr(r, "canton", None),
         "feedback": r.feedback or "",
         "resultados": _resultados_to_string(getattr(r, "resultados", "[]")),
-        "user_id": getattr(r, "user_id", None),
-        "username": getattr(getattr(r, "user", None), "username", None),
         "image_path": getattr(r, "image_path", None),   # si guardas en disco
         "image": getattr(r, "image", None),             # si guardas DataURL/base64 en DB
     }
@@ -95,8 +92,8 @@ def export_registros(
         filename = _make_filename("registros", user_id, date_from, date_to, "csv")
         output = io.StringIO()
         fieldnames = [
-            "key","inference_date","birth_date","gender","city","parish","canton",
-            "precision","feedback","resultados","user_id","username","image_path","image"
+            "key","inference_date","birth_date","gender","city","parish","province",
+            "feedback","resultados","image_path","image"
         ]
         writer = csv.DictWriter(output, fieldnames=fieldnames)
         writer.writeheader()
